@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import { supabase } from "../supabaseClient";
 
 const Write = () => {
+  const { user } = useContext(UserContext);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleSubmit = async (e) => {
     // TODO: 글 작성 로직 구현
+    e.preventDefault();
+
+    // supabase / posts / insert
+    await supabase.from("posts").insert([
+      {
+        title,
+        content,
+        user_id: user.id,
+      },
+    ]);
+
+    setTitle("");
+    setContent("");
   };
 
   return (
