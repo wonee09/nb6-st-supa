@@ -8,14 +8,14 @@ const Main = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      // 외부 통신(supabase)
-      const response = await supabase.from("posts").select("*");
-
-      setPosts(response.data);
+      const { data } = await supabase.from("posts").select("*");
+      setPosts(data);
     };
 
     fetchPosts();
   }, []);
+
+  console.log("posts => ", posts);
 
   return (
     <div>
@@ -26,12 +26,13 @@ const Main = () => {
           posts.map((post) => (
             <li key={post.id}>
               {post.title}
-
-              {post.user_id === user.id ? "[수정]" : ""}
+              {user.id === post.user_id ? " [수정]" : ""}
             </li>
           ))
         ) : (
-          <p>등록된 글이 없습니다.</p>
+          <>
+            <p>등록된 글이 없습니다.</p>
+          </>
         )}
       </ul>
     </div>

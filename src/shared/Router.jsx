@@ -41,6 +41,7 @@ const AppRouter = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Main />} />
+
         <Route element={<AuthRoute />}>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
